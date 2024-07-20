@@ -1,0 +1,117 @@
+/* styles/LandingPage.css */
+
+:root {
+    --primary-color: #ff6b6b;       /* Warm coral */
+    --secondary-color: #feca57;     /* Soft yellow */
+    --accent-color: #54a0ff;        /* Sky blue */
+    --text-color: #2d3436;          /* Dark gray for text */
+    --light-bg-color: #fff6e9;      /* Light cream background */
+    --dark-bg-color: #5f27cd;       /* Deep purple */
+}
+
+.home-page {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--light-bg-color);
+}
+
+header {
+    background-color: white;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h1 {
+    margin: 0;
+    color: var(--primary-color);
+}
+
+nav a {
+    margin-left: 1rem;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: var(--primary-color);
+}
+
+.hero {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.hero h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+button {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #ffd686;
+    transform: translateY(-2px);
+}
+
+.features {
+    padding: 4rem 2rem;
+    background-color: white;
+}
+
+.features h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--primary-color);
+}
+
+.feature-list {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.feature-item {
+    flex-basis: 30%;
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: var(--light-bg-color);
+    border-radius: 8px;
+    transition: transform 0.3s;
+}
+
+.feature-item:hover {
+    transform: translateY(-5px);
+}
+
+.feature-item h3 {
+    color: var(--accent-color);
+}
+
+footer {
+    background-color: var(--dark-bg-color);
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
