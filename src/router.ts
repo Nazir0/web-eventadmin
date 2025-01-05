@@ -1,39 +1,38 @@
 // @ts-ignore
 import type { RouteParams, RouteRecordRaw } from 'vue-router'
 // @ts-ignore
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
-import Home from './pages/LandingPage.vue'
+import LandingPage from './pages/LandingPage.vue'
+import Dashboard from './pages/Dashboard.vue'
 
 export type AppRouteNames =
     | 'global-feed'
     | 'login'
     | 'register'
+    | 'dashboard'
 
-export const routes: RouteRecordRaw[] = [
-    {
-        name: 'global-feed',
-        path: '/',
-        component: Home,
-    },
 
-    {
-        name: 'login',
-        path: '/login',
-        component: () => import('./pages/Login.vue'),
-    },
-    {
-        name: 'register',
-        path: '/register',
-        component: () => import('./pages/Register.vue')
-    }
+const router = createRouter({
+    history: createWebHistory(),
+    routes: [
+        {
+            name: 'landing-page',
+            path: '/',
+            component: LandingPage,
+        },
+        {
+            name: 'dashboard',
+            path: '/dashboard',
+            component: () => import('./pages/Dashboard.vue'),
+    
+        },
+    ],
+    })
+    
+export default router
 
-]
 
-export const router = createRouter({
-    history: createWebHashHistory(),
-    routes,
-})
 
 export function routerPush(name: AppRouteNames, params?: RouteParams): ReturnType<typeof router.push> {
     return params === undefined

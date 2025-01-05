@@ -1,0 +1,191 @@
+/* styles/dashboard.css */
+
+/* Reuse the same CSS variables from style.css for consistency */
+:root {
+    --primary-color: #ff6b6b;       /* Warm coral */
+    --secondary-color: #feca57;     /* Soft yellow */
+    --accent-color: #54a0ff;        /* Sky blue */
+    --text-color: #2d3436;          /* Dark gray for text */
+    --light-bg-color: #fff6e9;      /* Light cream background */
+    --dark-bg-color: #5f27cd;       /* Deep purple */
+}
+
+/* Main dashboard container */
+.dashboard {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--light-bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header / Navbar section */
+.dashboard-header {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.dashboard-header h1 {
+    margin: 0;
+    color: var(--primary-color);
+}
+
+/* Example: If you have nav links or icons in the header */
+.dashboard-header nav a {
+    margin-left: 1rem;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: color 0.3s;
+}
+
+.dashboard-header nav a:hover {
+    color: var(--primary-color);
+}
+
+/* Main content area */
+.main-content {
+    flex: 1;
+    padding: 2rem;
+}
+
+/* Section title styling */
+.main-content h2 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+/* Button styling (can also reuse from your global style if desired) */
+.main-content button {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    border-radius: 5px;
+    margin: 1rem 0;
+}
+
+.main-content button:hover {
+    background-color: #ffd686;
+    transform: translateY(-2px);
+}
+
+.event-list {
+    display: grid;  
+    /* On force 4 colonnes maxi : 1fr pour chaque colonne  */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem; /* espace horizontal et vertical entre les box */
+    
+    /* Pour “forcer” la même hauteur à toutes les cartes, on peut fixer auto-rows */
+    grid-auto-rows: 250px; /* par exemple, hauteur fixe de 250px */
+  }
+  
+  .event-item {
+    /* Pour centrer le contenu si besoin */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s; 
+    padding: 1.5rem;
+  }
+  
+  .event-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+/* Titre des événements dans les cartes */
+.event-item h3 {
+    margin: 0 0 1rem;
+    color: var(--accent-color);    /* Couleur d’accentuation (bleu) */
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+/* Texte descriptif dans les cartes */
+.event-item p {
+    margin: 0;
+    text-align: center;           /* Centrage du texte */
+    color: var(--text-color);
+}
+
+.event-item h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--accent-color);
+}
+
+.event-item p {
+    margin: 0;
+}
+
+/* Modal styling for create-event (if using a modal) */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    width: 90%;
+    max-width: 500px;
+    padding: 2rem;
+    border-radius: 8px;
+    position: relative;
+}
+
+.modal-content h2 {
+    color: var(--primary-color);
+    margin-top: 0;
+}
+
+.modal-content label {
+    display: block;
+    margin: 1rem 0 0.5rem;
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="date"] {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.modal-content .modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+.modal-content .modal-buttons button {
+    margin-left: 1rem;
+}
+
+/* Optional footer for the dashboard */
+.dashboard-footer {
+    background-color: var(--dark-bg-color);
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+}
