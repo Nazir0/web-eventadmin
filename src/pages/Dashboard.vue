@@ -1,32 +1,47 @@
 <template>
   <div class="dashboard">
-    <!-- Header -->
     <header class="dashboard-header">
       <h1>Welcome to Your Dashboard, {{ username }}</h1>
     </header>
 
-    <!-- Main Content -->
     <section class="main-content">
-      <h2>Upcoming Events</h2>
-      <!-- Display message if no events exist -->
-      <p v-if="events.length === 0">No upcoming events found.</p>
+      <div class="section-header">
+        <h2>Upcoming Events</h2>
+        <button @click="showCreateEventModal = true" class="btn-create-event">
+          Create a New Event
+        </button>
+      </div>
 
-      <!-- List of events -->
+      <!-- Loading state -->
+      <div v-if="isLoading" class="loading-container">
+        <div class="loading-spinner"></div>
+        <p>Loading events...</p>
+      </div>
+
+      <!-- Error state -->
+      <div v-else-if="error" class="error-container">
+        <p>{{ error }}</p>
+        <button @click="fetchEvents" class="btn-retry">Retry</button>
+      </div>
+
+      <!-- Empty state -->
+      <p v-else-if="events.length === 0" class="empty-state">
+        No upcoming events found. Create your first event by clicking the button above!
+      </p>
+      
+      <!-- Events list -->
       <div v-else class="event-list">
         <EventItem
           v-for="event in events"
           :key="event.id"
           :event="event"
+          :current-user="currentUser"
+          @edit="handleEditEvent"
         />
       </div>
-
-      <!-- Button to create a new event -->
-      <button @click="showCreateEventModal = true" class="btn-create-event">
-        Create a New Event
-      </button>
     </section>
 
-    <!-- Modal for creating new events -->
+    <!-- Create event modal -->
     <CreateEventModal
       v-if="showCreateEventModal"
       @close="showCreateEventModal = false"
@@ -36,43 +51,66 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 import EventItem from '@/components/EventItem.vue';
 import CreateEventModal from '@/components/CreateEventModal.vue';
 
-// Username for display
-const username = 'John Doe'; // Replace with actual username from state or API
-
-// State for events
+// Ideally, this would come from a user state/auth system
+const currentUser = ref('Nazir');
 const events = ref([]);
-
-// Modal visibility state
+const isLoading = ref(true);
+const error = ref('');
 const showCreateEventModal = ref(false);
 
-// Fetch events from backend
+// Computed property for displaying user name
+const username = computed(() => currentUser.value || 'Guest');
+
+// API base URL - ideally from env variable
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
+const API_TOKEN = import.meta.env.VITE_API_TOKEN || 'Token ed64c119e061e220202b6fb4630f8be81e390679';
+
+/**
+ * Fetch all events from the API
+ */
 const fetchEvents = async () => {
+  isLoading.value = true;
+  error.value = '';
+  
   try {
-    const response = await axios.get('your_url', {
+    const response = await axios.get(`${API_BASE_URL}/event/${currentUser.value}/`, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Token your_token_here',
+        Authorization: API_TOKEN,
       },
     });
     events.value = response.data;
-  } catch (error) {
-    console.error('Error fetching events:', error);
+  } catch (err) {
+    console.error('Error fetching events:', err);
+    error.value = 'Failed to load events. Please try again.';
+  } finally {
+    isLoading.value = false;
   }
 };
 
-// Handle adding a new event
+/**
+ * Handle new event creation
+ */
 const handleNewEvent = (newEventData) => {
-  const newId = events.value.length + 1;
-  events.value.push({ id: newId, ...newEventData });
-  showCreateEventModal.value = false; // Close modal
+  // Refresh the events list instead of manually adding to ensure we have the correct data
+  fetchEvents();
+  showCreateEventModal.value = false;
 };
 
-// Fetch events on mount
+/**
+ * Handle event edit (to be implemented)
+ */
+const handleEditEvent = (event) => {
+  console.log('Edit event:', event);
+  // Future implementation: Show edit modal
+};
+
+// Load events on component mount
 onMounted(() => {
   fetchEvents();
 });
